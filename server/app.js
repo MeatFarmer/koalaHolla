@@ -24,11 +24,30 @@ app.get( '/', function( req, res ){
 app.get( '/getKoalas', function( req, res ){
   console.log( 'getKoalas route hit' );
   //assemble object to send
-  var objectToSend={
-    response: 'from getKoalas route'
-  }; //end objectToSend
+  pg.connect( connectionString, function( err, client, done ){
+     if( err ){
+       console.log( err );
+     } // end error
+     else{
+       console.log( 'connected to db' );
+       var query = client.query( 'SELECT * from koala') ;
+       // array for koala
+       var allKoala = [];
+       query.on( 'row', function( row ){
+         // push this koala into the new array
+         allKoala.push( row );
+       })
+       query.on( 'end', function(){
+         // finish the operation
+         done();
+         // send back data
+         console.log( allKoala );
+         // will this work?
+         res.send( allKoala );
+       });
+     } // end no error
+   }); // end connect
   //send info back to client
-  res.send( objectToSend );
 });
 
 // add koala
