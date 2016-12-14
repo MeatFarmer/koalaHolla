@@ -77,5 +77,13 @@ app.post( '/editKoala', urlencodedParser, function( req, res ){
     response: 'from editKoala route'
   }; //end objectToSend
   //send info back to client
-  res.send( objectToSend );
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+        console.log(err);
+    }
+    else {
+      client.query ('UPDATE koala SET sex=$2, age=$3, ready_for_transfer=$4, notes=$5 WHERE name=$1', [ req.body.name, req.body.sex, req.body.age, req.body.ready_for_transfer, req.body.notes] );
+      res.send( objectToSend );
+    }
+  }); // in pg connect connectionString
 });

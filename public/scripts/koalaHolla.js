@@ -21,6 +21,29 @@ $( document ).ready( function(){
     // call saveKoala with the new obejct
     saveKoala( objectToSend );
   }); //end addButton on click
+  $( '#editButton' ).on( 'click', function(){
+    console.log( 'in addButton on click' );
+    // get user input and put in an object
+    // NOT WORKING YET :(
+    // using a test object
+    if($('#nameEditIn').val() === '' ||
+       $('#ageEditIn').val() === '' ||
+       $('#sexEditIn').val() === '' ||
+       $('#readyForTransferEditIn').val() === '' ||
+       $('#notesEditIn').val() === '') {
+         alert("Please use all fields to edit");
+    } else {
+      var objectToSend = {
+        name: $('#nameEditIn').val(),
+        age: $('#ageEditIn').val(),
+        sex: $('#sexEditIn').val(),
+        ready_for_transfer: $('#readyForTransferEditIn').val(),
+        notes: $('#notesEditIn').val()
+      };
+      // call saveKoala with the new obejct
+      editKoala( objectToSend );
+  }
+  }); //end addButton on click
 }); // end doc ready
 
 var getKoalas = function(){
@@ -51,6 +74,19 @@ var saveKoala = function( newKoala ){
   // ajax call to server to get koalas
   $.ajax({
     url: '/addKoala',
+    type: 'POST',
+    data: newKoala,
+    success: function( data ){
+      console.log( 'got some koalas: ', data );
+      getKoalas();
+    } // end success
+  }); //end ajax
+}; // end saveKoala
+var editKoala = function( newKoala ){
+  console.log( 'in saveKoala', newKoala );
+  // ajax call to server to get koalas
+  $.ajax({
+    url: '/editKoala',
     type: 'POST',
     data: newKoala,
     success: function( data ){

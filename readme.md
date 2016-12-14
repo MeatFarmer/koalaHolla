@@ -18,8 +18,8 @@ Technologies
 Client needs
 ------------
 Koala Holla has provided a CSV (comma separated values) spreadsheet of their current inventory. They want
-[] a database that houses this information
-[] is able to be viewed at any time
+[x] a database that houses this information
+[x] is able to be viewed at any time
 [] the ability to update data as needed.
 
 They have also provided their logo and the source code from when Lou (a KH employee) tried to spin up a JEN stack project to support this, but had to leave for foraging school in Finland before he could finally finish.
